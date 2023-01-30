@@ -6,33 +6,33 @@ import { useMyFetch } from './useMyFetch'
 export const useGlobalState = createGlobalState(
   () => {
     const comments = ref([
-      {
-        _id: '',
-        date: Date.now(),
-        likes: ['aa'],
-        content: "????",
-        author: '张随缘',
-        createdAt: '2023-01-27T11:15:33.807+00:00',
-        replies: [{
-          _id: '',
-          author: '徐国威',
-          date: Date.now(),
-          likes: [],
-          content: "????",
-          replies: [],
-          createdAt: '2023-01-27T11:15:33.807+00:00',
-          at: '张随缘',
-        }, {
-          _id: '',
-          author: '张随缘',
-          date: Date.now(),
-          likes: [],
-          content: "笑死",
-          replies: [],
-          createdAt: '2023-01-29T11:15:33.807+00:00',
-          at: '徐国威',
-        }]
-      }
+      // {
+      //   _id: '',
+      //   date: Date.now(),
+      //   likes: ['aa'],
+      //   content: "????",
+      //   author: '张随缘',
+      //   createdAt: '2023-01-27T11:15:33.807+00:00',
+      //   replies: [{
+      //     _id: '',
+      //     author: '徐国威',
+      //     date: Date.now(),
+      //     likes: [],
+      //     content: "????",
+      //     replies: [],
+      //     createdAt: '2023-01-27T11:15:33.807+00:00',
+      //     at: '张随缘',
+      //   }, {
+      //     _id: '',
+      //     author: '张随缘',
+      //     date: Date.now(),
+      //     likes: [],
+      //     content: "笑死",
+      //     replies: [],
+      //     createdAt: '2023-01-29T11:15:33.807+00:00',
+      //     at: '徐国威',
+      //   }]
+      // }
     ])
 
     async function getComments(articleId) {

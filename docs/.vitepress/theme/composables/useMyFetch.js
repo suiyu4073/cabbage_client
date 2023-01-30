@@ -40,7 +40,7 @@ const getJWT = async () => {
   return jwt.value
 }
 
-const getJWTForce = async () => {
+export const getJWTForce = async () => {
   const name = useStorage('my-id', '');
   const token = useStorage('my-token', '');
   const jwtProDate = useStorage('my-date', 0)

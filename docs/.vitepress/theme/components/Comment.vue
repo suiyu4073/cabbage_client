@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <button v-if="!show" class="rounded-md bg-green-700 text-white mt-3 p-2" @click="handleShow">展示评论区</button>
+  <div v-else>
     <div class="flex items-center gap-2 pb-4">
       <p class="font-bold text-lg ">评论</p>
     </div>
@@ -26,14 +27,19 @@ import Avatar from './Avatar.vue';
 import { useGlobalState } from '../composables/store';
 import { useStorage } from '@vueuse/core';
 import { useData } from 'vitepress';
-import { watch } from 'vue';
+import { watch, ref } from 'vue';
+import { getJWTForce } from '../composables/useMyFetch'
 
+const show = ref(false)
 const id = useStorage('my-id', '')
 const { comments, getComments } = useGlobalState()
 const { frontmatter } = useData()
 
-
-getComments(frontmatter.value.title) //初始取一次
+const handleShow = async () => {
+  show.value = true
+  await getJWTForce()
+  getComments(frontmatter.value.title)
+}
 
 watch(frontmatter, () => { //文章变化取一次
   getComments(frontmatter.value.title)

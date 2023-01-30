@@ -52,14 +52,13 @@ import { useMyFetch } from '../composables/useMyFetch';
 import { remove } from 'lodash-es'
 import { useGlobalState } from '../composables/store';
 
-const replying = ref(false)
-const box = ref()
-const userId = useStorage('my-id')
-
 const props = defineProps({
   _id: String,
   createdAt: String,
-  likes: Array,
+  likes: {
+    type: Array,
+    default: []
+  },
   content: String,
   replies: Array,
   at: String,
@@ -68,17 +67,25 @@ const props = defineProps({
 
   parentCommentId: String
 })
-
+const replying = ref(false)
+const box = ref()
+const userId = useStorage('my-id')
 const date = Date.parse(props.createdAt)
-console.log(date)
+const likes = ref(props.likes)
 
 const handleReply = () => {
   replying.value = !replying.value
   if (replying.value) nextTick(() => box.value.textBox.focus())
 }
 
-const handleZan = () => {
-
+const handleZan = async () => {
+  if (likes.value.find(v => v === userId.value)) {
+    const { data } = await useMyFetch('/comment/zan/' + props._id).delete().json()
+    likes.value = data.value.likes
+    return
+  }
+  const { data } = await useMyFetch('/comment/zan/' + props._id).post().json()
+  likes.value = data.value.likes
 }
 
 const handleRemove = async () => {

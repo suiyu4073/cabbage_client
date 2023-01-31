@@ -12,4 +12,6 @@ import uniqolor from 'uniqolor'
 
 const qolor = ref(uniqolor(props.id))
 const props = defineProps(['id'])
+
+console.log('avatar rendered')
 </script>

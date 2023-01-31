@@ -1,9 +1,8 @@
 import { useFetch } from '@vueuse/core';
 import { createFetch, useStorage } from '@vueuse/core'
 import shortUUID from 'short-uuid';
-import { SERVER_URL } from '../../../../env';
 
-const baseUrl = SERVER_URL || 'http://localhost:8000'
+const baseUrl = import.meta.env.VITE_URL || 'http://localhost:8000'
 
 export const useMyFetch = createFetch({
   baseUrl,
@@ -35,6 +34,7 @@ const getJWT = async () => {
   const jwtProDate = useStorage('my-date', 0)
 
   if (!jwt.value || Date.now() - jwtProDate.value > 3600 * 1000 * 24) {
+    console.log('重新登录ing')
     await getJWTForce()
   }
   return jwt.value
@@ -53,6 +53,7 @@ export const getJWTForce = async () => {
     console.log(data.value)
   }
   const { data } = await useFetch(baseUrl + '/user/login').post({ name: name.value, token: token.value }).json()
+  console.log(data.value)
   jwtProDate.value = data.value.jwtProDate
   jwt.value = data.value.jwt
 }

@@ -44,4 +44,6 @@ const handleShow = async () => {
 watch(frontmatter, () => { //文章变化取一次
   getComments(frontmatter.value.title)
 })
+
+console.log(import.meta.env)
 </script>

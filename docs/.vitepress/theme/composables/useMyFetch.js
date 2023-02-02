@@ -28,7 +28,6 @@ export const useMyFetch = createFetch({
   },
 })
 
-
 const getJWT = async () => {
   const jwt = useStorage('my-jwt', '')
   const jwtProDate = useStorage('my-date', 0)
@@ -47,13 +46,21 @@ export const getJWTForce = async () => {
   const jwt = useStorage('my-jwt', '')
 
   if (!name.value) {
-    name.value = shortUUID.generate()
-    token.value = shortUUID.generate()
-    const { data } = await useFetch(baseUrl + '/user/signup').post({ name: name.value, token: token.value }).json()
-    console.log(data.value)
+    await register()
   }
   const { data } = await useFetch(baseUrl + '/user/login').post({ name: name.value, token: token.value }).json()
   console.log(data.value)
+  if (data.value.message === '密码错误')
+    await register()
   jwtProDate.value = data.value.jwtProDate
   jwt.value = data.value.jwt
+}
+
+const register = async () => {
+  const name = useStorage('my-id', '');
+  const token = useStorage('my-token', '');
+  name.value = shortUUID.generate()
+  token.value = shortUUID.generate()
+  const { data } = await useFetch(baseUrl + '/user/signup').post({ name: name.value, token: token.value }).json()
+  console.log(data.value)
 }

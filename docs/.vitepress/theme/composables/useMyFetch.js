@@ -2,7 +2,7 @@ import { useFetch } from '@vueuse/core';
 import { createFetch, useStorage } from '@vueuse/core'
 import shortUUID from 'short-uuid';
 
-const baseUrl = import.meta.env.VITE_URL || 'http://localhost:8000'
+export const baseUrl = import.meta.env.VITE_URL || 'http://localhost:8000'
 
 export const useMyFetch = createFetch({
   baseUrl,

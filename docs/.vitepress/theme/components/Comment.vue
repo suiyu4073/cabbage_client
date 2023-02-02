@@ -26,15 +26,18 @@ import Avatar from './Avatar.vue';
 import { useGlobalState } from '../composables/store';
 import { useStorage } from '@vueuse/core';
 import { useData } from 'vitepress';
-import { watch } from 'vue';
+import { onBeforeMount, watch } from 'vue';
 import { getJWTForce } from '../composables/useMyFetch'
 
 const id = useStorage('my-id', '')
 const { comments, getComments } = useGlobalState()
 const { frontmatter } = useData()
 
-await getJWTForce()
-getComments(frontmatter.value.title) //从后端获取数据
+onBeforeMount(async () => {
+  await getJWTForce()
+  await getComments(frontmatter.value.title) //从后端获取数据
+})
+
 
 watch(frontmatter, () => { //文章变化取一次
   getComments(frontmatter.value.title)

@@ -2,6 +2,7 @@ import DefaultTheme from 'vitepress/theme'
 import Layout from './components/Layout.vue'
 import './custom.css'
 import 'remixicon/fonts/remixicon.css'
+import Calculator from './components/Calculator.vue'
 
 export default {
   ...DefaultTheme,
@@ -12,5 +13,6 @@ export default {
 
 
     // register your custom global components
+    ctx.app.component('Calculator', Calculator)
   }
 }
